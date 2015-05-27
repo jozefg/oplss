@@ -1,0 +1,186 @@
+#+TITLE: Prelecture 1
+
+* Subject Matter
+ - Category theory for some purpose
+ - Purpose = basic proof theory
+
+5 talks
+
+ - Basic categories + functors
+ - Behavioral reasoning
+ - Universal properties
+ - 2d categories (nat. transformations + adjunctions)
+ - Dependencies - FOL
+
+* Category Theory
+
+ - CT is objects (generalized sets) and arrows (generalized functions) and
+   composition structure (associative combination).
+
+ - Can only describe things behaviorally since we can't examine the inner
+   structure of objects.
+
+** Category                                                             :def:
+
+A category, C, has the structure of a set of objects, C₀, and arrows,
+C₁. Furthermore, there are two boundary functions d⁺ and d⁻ (cod and
+dom respectively).
+
+NOTATION: A : C ≙ A ∈ C₀ and f :: C ≙ f ∈ C₁ and C(A → B) ≙ {f ∈ C₁ |
+ d⁻ f = A and d⁺ f = B}
+
+Finally, for each A : C then there is 1ₐ ∈ C(A → A) and for all A, B,
+C, if f ∈ C(A → B) and g ∈ C(B → C) then g ∘ f ∈ C(A → C).
+
+ ∘ is associative and has the identity 1ₐ for all A.
+
+This means any path of arrows has a unique way of "joining" them
+together.
+
+NOTATION: A ≙ idₐ
+
+*** Composable arrows                                                   :def:
+
+f and g are composable arrows if d⁺ f = d⁻ g
+
+*** Parallel arrows                                                     :def:
+
+f and g are parallel arrows if d⁺ f = d⁺ g and d⁻ f = d⁻ g
+
+*** Endomorphism                                                        :def:
+
+f is an endomorphism if d⁻ f = d⁺ g
+
+** Diagrams                                                             :def:
+
+A diagram is a collection of objects and arrows between them. A
+diagram is commutative if the composite of any two paths between the
+same objects are equal.
+
+Example:
+
+   A —————— f ———————→ B —————— g ———————→ B
+    \________________ f ∘ g _______________/
+
+*** Operations on diagrams
+
+**** Compositional Congruence  (wiskers)                                :def:
+
+Any commutative diagram remains a commutative diagram when pre or post
+composed with another arrow.
+
+**** Transitivity of Equality (pasting)                                 :def:
+
+Any two diagrams with the same arrow can be "glued" together so that
+the arrow and the arrows domain and codomain are shared so the two
+diagrams become one.
+** Example Categories
+*** Empty category (0)
+
+No objects, no arrows.
+
+*** Singleton category (1)
+
+One object, *, and one arrow, id(*)
+
+*** Discrete Categories
+
+Categories with only identity arrows (0 and 1 are specific
+examples).
+
+
+*** Structured Sets as Categories
+**** Preorder
+
+A preorder on a set, S, is an operation ≤ gives rise to a category
+where the set of objects is S and there is exactly one arrow from A →
+B if and only if A ≤ B.
+
+Since ≤ is reflexive we have identities. Since ≤ is transitive ∘ is
+well defined as A ≤ B ∧ B ≤ C → A ≤ C.
+
+This gives rise to the interval category (2), the category generated
+from the preorder ({1, 2}, ≤).
+
+**** Monoid
+
+A monoid is a set, M, and a binary operation × and a unit for the
+binary operation ε. × is associative. A monoid category M has only one
+object *. M(* → *) = M.
+
+Objects become arrows, composition is defined by multiplication with
+×. Identity is ε and the unit laws are immediate from the fact ε is
+the unit for ×. × is associative so ∘ is as well.
+
+If M is a group, then the category generated has inverses for all
+arrows, so that f⁻ ∘ f = f⁻ ∘ f = ε = 1
+*** Categories of Structured Sets
+**** Set
+
+The category of sets (objects) and functions between them (arrows).
+
+**** PreOrd
+
+Objects are preorders, morphisms are preorder homomorphisms, monotone
+functions.
+
+**** Mon
+
+The obvious thing.
+
+** Functors                                                             :def:
+
+Categories of structured set = Sets + Homomorphisms. Categories are
+structured sets, what are their homs?
+
+A functor, F : C → D, is the pair of maps F₀ : C₀ → D₀ and F₁ : C₁ →
+D₁.
+
+If f ∈ C(A → B) then F(f) ∈ D(F(A) → F(B))
+
+Furthermore F₁(1) = 1 and F₁(g ∘ f) = F₁(g) ∘ F₁(f)
+
+*** Identity functor                                                    :def:
+
+An identity functor is the functor whose object map is the identity
+and whose arrow map is the identity.
+
+*** Composition                                                         :def:
+
+The composition of the functors F and G is (G₀ ∘ F₀, G₁ ∘ F₁)
+
+*** Cat
+
+The category of (small) categories. Objects are categories, arrows are
+functors. Use composition and identity of functors for the appropriate
+composition structure.
+
+** Small Categories                                                     :def:
+
+A category C is small if  C₁ is a set
+
+** Locally Small Categories                                             :def:
+
+A category C is locally small if  C₁(A → B) is a set
+** Hom-Functors                                                         :def:
+Let C be a locally small category, suppose X : C. Then there is a
+function which maps A ↦ C(X → A). This is a functor which maps objects
+to these homsets and arrows, f, to C(X → f)
+
+NOTATION C(X → f) ≙ - ∘ f : C(X → A) → C(X → B)
+
+Called a hom-functor. X is the representing object.
+
+Proof is boring.
+** Constructions on Categories
+
+*** Product Categories :def:
+
+Given two categories, C and D, C × D is the category of their ordered
+pairs. Arrows and composition are defined in the obvious manner.
+
+*** Opposite Category :def:
+
+Given a category C, Cᵒ is the category where objects are C and Cº(A →
+B) = C(B → A) for all A and B. identities are old identities. f ∘ g =
+g ∘ f
