@@ -1,0 +1,176 @@
+#+TITLE: Proof Theory: Harmony
+
+Fun papers:
+ Gentzen '35
+ Dummett '76
+ Martin-Lof '83
+
+* Logic
+
+LOGIC: The study of the laws governing valid inference
+
+Example of inference:
+ 1. Helen is a women
+ 2. All women are mortal
+ 3. Therefore, Helen is mortal
+
+In logic, we seek to abstract over unneeded details.
+
+ 1. women(helen)
+ 2. ∀ x. woman(x) ⊃ mortal(x)
+ 3. therefore, mortal(helen)
+
+Forget about woman/mortal/helen, say
+
+ 1. P(c)
+ 2. ∀x. P(c) ⊃ Q(x)
+ 3. Q(c)
+
+Different logics study different conceptions of truth, there's no one
+true logic.
+
+Judgments:
+
+| Judgment         | Logic                | Computation             |
++-------------------------------------------------------------------+
+| A true           | Intuitionistic logic | Lambda calculus         |
+| A false          | Classical logic      | Continuation/stuff      |
+| A valid          | Modal logic          | Distributed computation |
+| A true at time t | Temporal logic       | EXERCISE                |
+| A is ephemeral   | Linear logic         | Concurrent computation  |
+
+* What is the meaning of a prop?
+
+The Tarski way: Describe a model and denote everything into it. It's
+not suitable for foundations since you need a preexisting model
+
+The ML way: The meaning of a prop is determined by what counts as
+verification (not a proof but we'll think of it as a proof).
+
+For example, when is A ∧ B true?
+
+     A true   B true
+     ——————————————–
+       A ∧ B true
+
+This DEFINES conjunction, it's not admissible with respect to our
+model, it's the definition. This is verificationism.
+
+We know what conjunction is, what next? If I know A ∧ B, what may I
+conclude
+
+     A ∧ B true  A ∧ B true
+     ——————————  ——————————
+       A true      B true
+
+This is a consequence of the definition. How do we know our lecturer
+didn't just stab us in the back? Why are these rules correct? More
+over, some would say the elim rules are defns, not the
+introduction. If these definitions are equivalent, we have harmony.
+
+Harmony for a connective
+
+ 1. If we can prove C using an intro and then immediately an elim
+    rule, we can avoid the detour
+
+    For ∧, if
+
+        D   E
+        -   -
+        A   B              D
+        ————— ∧I  becomes  -
+        A ∧ B              A
+        ————– ∧E1
+          A
+
+        D   E
+        -   -
+        A   B               E
+        ————— ∧I   becomes  -
+        A ∧ B               B
+        ————– ∧E2
+          B
+
+    These are local reductions, because we have these, the elim rules are
+    locally sound.
+
+ 2. If we have a proof of some connective, can we apply the
+    elimination rules so that we can re-apply the introduction rule to
+    prove our original connective
+
+    For ∧
+
+                       D       D
+                     —————   —————
+      D              A ∧ B   A ∧ B
+    —————   becomes  —————   —————
+    A ∧ B              A       B
+                     —————————————
+                         A ∧ B
+
+  These are local expansions. because we have these, the elim rules
+  are locally complete.
+
+These expansions SHOULD NOT USE OTHER CONNECTIVES. Otherwise you
+cannot define one connective without another, your logic is
+entangled.
+
+          A ∧ (B ∧ C)
+          ———————————
+             B ∧ C
+          ———————————
+               B
+
+This isn't a proof, it's an inference of `B` from `A ∧ (B ∧ C)`. A
+hypothetical proof as a opposed to a categorical one. Gives us an
+derived rule of inference,
+
+       A ∧ (B ∧ C)
+       ——————————
+           B
+
+Or the hypothetical, A ∧ (B ∧ C) ⊢ B
+
+Implication,
+
+      —————————ˣ
+       A true
+         .
+         .
+         .
+       B true
+     —————–———— ⊃Iˣ
+     A ⊃ B true
+
+This internalizes the notion of hypotheticals.
+
+    A ⊃ B   A
+    ————————— ⊃E
+        B
+
+Harmony for ⊃
+
+     D     E              E
+   —————   -              -ˣ
+   A ⊃ B   A              A
+   —————————    becomes   D
+       B                  B
+
+
+                      D
+                    —————    —ˣ
+     D              A ⊃ B    A
+   —————   becomes  ———————————
+   A ⊃ B                 B
+                    ——————————— ⊃Iˣ
+                       A ⊃ B
+
+EXERCISE: Do this for ⊤ and ⊥
+EXERCISE: Prove or disprove
+
+ - A ∨ (B ∧ C) ⊣⊢ (A ∨ B) ∧ (A ∨ C)
+ - A ⊃ (B ⊃ C) ⊣⊢ (A ⊃ B) ⊃ (A ⊃ C)
+ - A ⊃ (B ∨ C) ⊣⊢ (A ⊃ B) ∨ (A ⊃ C)
+
+EXERCISE: What is the computational characterization of temporal
+logic: A @ t with ◯ A @ t iff A @ t + 1
