@@ -1,0 +1,112 @@
+#+TITLE: Type Theory 1
+
+* Triangle
+
+Three vertices
+
+ - Proof Theory
+ - Type Theory
+ - Category Theory
+
+ - Categorical logics ↔ Proof Theory to Category Theory
+ - Categorical semantics ↔ Type Theory to Category Theory
+ - props as types ↔ Type Theory to Proof Theory
+
+Useful to move between vertices to understand an idea. EG what does
+focusing correspond to in type theory? (See ../work/research/).
+
+* Watch out for
+
+ - Emphasis on abstraction ("behavioral characterization of things")
+ - Strictures not affordances ("less is more")
+    In particular, the role of constructivity - axiomatic freedom
+ - Proof relevance ("proofs are mathematical objects to be studied")
+    Hey CMU doesn't screw this up :)
+ - Identity ("no entity without identity"/"what is equality?")
+* Getting to type theory
+** Truth vs Proof
+
+ - You start with truth tables: boolean algebra
+ -  Then you go on to proofs ala Euclid
+
+Truth tables are denotational and line-by-line proofs are more
+operational.
+
+A boolean algebra is a complemented distributive lattice.
+
+ 1. It's a preorder x ≤ x, x ≤ z (x ≤ y, y ≤ z)
+ 2. Define x ≡ y iff x ≤ y and y ≤ x
+ 3. Has all finite meets and joins (this is a lattice)
+    - greatest element: x ≤ 1
+    - least element: 0 ≤ x
+    - glb: z ≤ x ∧ y (z ≤ x, z ≤ x) and x ∧ y ≤ x and x ∧ y ≤ x
+    - glb: z ≥ x ∨ y (z ≥ x, z ≥ x) and x ∨ y ≥ x and x ∨ y ≥ x
+ 4. bar(x) ∨ x ≡ 1 and bar(x) ∧ x ≡ 0
+ 5. x ∨ (y ∧ z) ≡ (x ∨ y) ∧ (x ∨ z) and x ∧ (y ∨ z) ≡ (x ∧ y) ∨ (x ∧ z)
+ 6. (Sidenote) Exponential: xʸ ≡ bar(y) ∨ x
+
+A heyting algebra is a lattice with exponentials
+
+ 1. It's a preorder x ≤ x, x ≤ z (x ≤ y, y ≤ z)
+ 2. Define x ≡ y iff x ≤ y and y ≤ x
+ 3. Has all finite meets and joins
+ 5. Has an exponential x ⇒ y
+    - (x ⇒ y) ∧ x ≤ y
+    - z ≤ x ⇒ y (z ∧ x ≤ y)
+
+Quote: "Everyone knows that category theorists are bringing up the
+damn Yoneda lemma"
+
+EXERCISE: prove this is distributive.
+
+Yoneda lemma: x ≤ y iff ∀z. z ≤ x ⇒ z ≤ y
+(Yoneda lemma in CT: Nat(Hom(-, A), F) ≅ F A)
+
+Negation: ~x ≡ 0 ⇒ x
+Inconsistent with x
+Not the case that ~x ∨ x ≡ 1 (Watch for counterexamples)
+
+EXERCISE:
+
+ 1. x ≤ x ∨ y (or x ∧ y ≤ x)
+ 2. x ≤ x ∧ x
+ 3. x ∧ y ≤ y ∧ x
+
+Lindembaum algebra: A heyting algebra quotiented by ≡
+
+Thm: Γ ⊢ A iff ∀ HA. [Γ] ≤ [A]
+
+Triv = {1, {(1, 1)}}
+
+A and B and A ⊢ B, maps A → 1 and B → 0, now ¬ (A ≤ B) and AGH
+
+** What about proofs?
+
+One idea: Add a notion of evidence for an ordering. Generalize x ≤ y
+to F is why x ≤ y or f : x → y
+
+Several primitive types of evidence:
+
+ - id : x ≤ x
+ - f ∘ g : A → C (f : B → C, g : A → C)
+ - <f, g> : C → A × B (f : C → A, g : C → B)
+
+What if we did this with logic instead of just HA
+
+Γ ⊢ A to Γ ⊢ M : A
+
+ - Γ, x : A × B ⊢ fst(x) : A
+ - Γ, M : A, N : B ⊢ <M, N> : A × B
+
+** What about Equality
+
+When is it the case that f = g : A → B or Γ ⊢ M = N : A
+
+Gentzen: Introduction rules + Elimination rules are "inverses"
+Eg Γ ⊢ fst(<M, N>) = M
+   Γ ⊢ snd(<M, N>) = N
+
+What's cool is this is a notion of computation and uniqueness.
+
+There's a similar idea in CT, it comes up with the commutativity of
+the diagrams for something like products.
