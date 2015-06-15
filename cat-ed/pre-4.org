@@ -1,0 +1,91 @@
+#+TITLE: Lecture 4
+
+* Recap
+ - Last time we want through some universal constructions (products,
+   coproducts, exponentials)
+ - Today is 2-d categories
+
+* 2-d Categorical Concepts
+** Naturality
+ - Carrier of 2-d structure of categories of categories
+ - Continuity
+
+Defined by a natural transformation
+If we have to parallel functor, F, G : C → D, a nat. φ : F → G is
+a functor C → D→ so that dom ∘ φ = F and cod ∘ φ = G
+
+ie
+
+For each object in the domain category, A : C. We have an arrow
+
+   φₐ : F C → G D
+
+and for all f : A → B, φ(B) ∘ F(f) = G(f) ∘ φ(A) (naturality square)
+
+Natural transformations are like an arrow between functors. Define the
+functor category for fixed categories C, D, it's the category Fun(C,
+D) whose objects are functors F : C → D and whose arrows φ : F → G are
+natural transformations. 1(F) is the nat. which sends A ↦
+id(F(A)). Composition is composition component wise.
+
+   (ψ ∘ φ)(A) = ψ(A) ∘ φ(A)
+
+** Natural Isomorphisms
+
+A particular class of natural transformations
+
+A natural isomorphism is an isomorphism in the functor category. ie if
+we have a φ : Fun(C, D)(F → G) then there is a φ⁻ : G → F and for all
+A : C, φ⁻(A) ∘ φ(A) = 1 = φ(A) ∘ φ⁻(A). All the components are thus
+isos.
+
+** Cat's exponentials
+
+A functor category is an object in a category of categories. In
+particular, in Cat for any C and D, Fun(D, C) : Cat and C ⊃ D = Fun(D,
+C)
+
+α(A) : F₁(A) → F₂(A)
+G₂(α(A)) : G₂(F₁(A)) → G₂(F₂(A))
+β(F₁(A)) : G₁(F₁(A)) → G₂(F₁(A))
+
+φ = A ↦ G₂(α(A)) ∘ β(F₁(A))
+
+Exercise, show φ(B) ∘ G₁(F₁(f)) = G₂(F₂(f)) ∘ φ(A)
+
+** 2-Category
+
+Made of 3 layers
+
+Dim 0: objects or 0-cells
+Dim 1: arrows or 1-cells
+ - Unique composites of paths
+Dim 2: 2-cells
+ - Unique composites of pasting diagrams
+
+** Adjunctions
+
+*** Behaviourally
+F : C → D and G : D → C
+
+form an adjunction F ⊣ G if η : Id(C) → G ∘ F and ε : F ∘ G → id(D)
+
+(εF) ∘ (Fη) = 1(F)
+(ηG) ∘ (Gε) = 1(G)
+
+For a natural transformation, φ and a functor F F(φ) is a natural
+transformation where F(φ)(A) = F(φ(A))
+Furthermore φ(F) is a natural transformation where φ(F) = φ(F(A))
+
+
+** Structurally
+
+F ⊣ G if there is a bijection C(A → G(B)) → D(F(A) → B) ♯ goes from A
+→ G(B) to F(A) → B and ♭ is the reverse
+
+this is natural so
+
+F = Hom(-, G -)
+G = Hom(F -, -)
+
+♯ : F → G
