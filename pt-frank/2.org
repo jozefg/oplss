@@ -1,0 +1,53 @@
+#+TITLE: Proof Theory: Props as Types
+
+Good reading:
+
+ - Curry '35
+ - Howard '69
+
+* Props as Types (Proofs as Programs; Types as Love)
+
+| Prop  | Type  | Proof Term  |
+|-------+-------+-------------|
+| A ∧ B | A × B | <M, N>      |
+| A ⊃ B | A → B | λx. M       |
+| A ∨ B | A + B | inl M/inr M |
+| ⊤     | unit  | tt          |
+| ⊥     | void  | None exist  |
+
+Key insights of props-as-types
+
+ - Proofs can be described with "proof terms", a handy notation for
+   proofs
+ - Introduction and elimination rules add constructs to our language
+   of proof terms
+ - Some of these proof terms look like a programming language
+ - The local reduction rules give a semantics for the proof term
+   language
+ - The language turns out to be STLC for IPL
+ - Locally expansion gives extensionally equivalent terms. This justifies
+   that they are "the same term"ish.
+
+The proof theory doesn't answer everything: for example evaluation
+strategy. But it gives quite a lot.
+
+Proof terms are nice for proving things:
+
+   A ⊃ (B ⊃ C) ⊢ (A ∧ B) ⊃ C
+   Assume f : A ⊃ B ⊃ C
+   uncurry ≡ λ p. f (π₁ p) (π₂ p)
+
+   (A ∧ B) ⊃ C ⊢ A ⊃ (B ⊃ C)
+   Assume f : (A ∧ B) ⊃ C
+   curry ≡ λ a. λ b. f <a, b>
+
+
+In Agda
+
+#+begin_src agda2
+  uncurry : ∀ {A B C} → (A → B → C) → (A × B) → C
+  uncurry f (a , b) = f a b
+#+end_src
+
+EXERCISE: prove that [curry/f]uncurry ≅ id
+EXERCISE: prove that A ⊃ (B ⊃ C) ≅ (A ⊃ B) ⊃ (A ⊃ C)

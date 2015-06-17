@@ -1,0 +1,46 @@
+#+TITLE: Category Theory 2
+
+Proof-Irrelevance out of Exluded-Middle and Choice in the Calculus of
+Constructions.
+
+i : (N, +, 0) ↪ (Z, +, 0)
+i = n ↦ n
+
+WTS if f, g : Z → M if i · f  = i · g then f = g
+
+
+If n ≥ 0 then f(n) = g(n). What if n < 0? Then 0 = f(0) = f(-n + n) so
+
+       0 = f(-n) + f(n) similarly for g
+
+Therefore, f(n) and g(n) are always invertible.
+
+0 = 0
+0 = g(-n) + g(n)
+0 = g(-n) + f(n)
+f(-n) + f(n) = g(-n) + f(n)
+f(-n) + f(n) + f(-n) = g(-n) + f(n) + f(-n)
+f(-n) = g(-n)
+
+f(-n) + f(n) = 0
+
+
+
+
+Categorical axiom of choice: Every epimorphism is a split epi.
+
+If s · r = id then s is a section of r and r is a retraction of s
+
+Being a split monic = having a retraction
+Being a split epic  = having a section
+
+Lemma, if f has a section s and a retraction r then s = r, ie if  s ·
+f = id and f · r = id then s = r
+
+s · f · r = (s · f) · r = id · r = r
+s · f · r = s · (f · r) = s · id = s
+
+Therefore s = r as required.
+
+If an arrow f a section and an retraction, g, then g has retraction
+and section f. Immediate by defn.

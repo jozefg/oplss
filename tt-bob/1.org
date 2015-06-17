@@ -40,7 +40,7 @@ A boolean algebra is a complemented distributive lattice.
     - greatest element: x ≤ 1
     - least element: 0 ≤ x
     - glb: z ≤ x ∧ y (z ≤ x, z ≤ x) and x ∧ y ≤ x and x ∧ y ≤ x
-    - glb: z ≥ x ∨ y (z ≥ x, z ≥ x) and x ∨ y ≥ x and x ∨ y ≥ x
+    - lub: z ≥ x ∨ y (z ≥ x, z ≥ x) and x ∨ y ≥ x and x ∨ y ≥ x
  4. bar(x) ∨ x ≡ 1 and bar(x) ∧ x ≡ 0
  5. x ∨ (y ∧ z) ≡ (x ∨ y) ∧ (x ∨ z) and x ∧ (y ∨ z) ≡ (x ∧ y) ∨ (x ∧ z)
  6. (Sidenote) Exponential: xʸ ≡ bar(y) ∨ x

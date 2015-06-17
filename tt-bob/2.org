@@ -1,0 +1,125 @@
+#+TITLE: Type Theory 2
+
+* Answer to exercise
+
+A heyting algebra is distributive
+
+a ∧ (b ∨ c) ≡ (a ∧ b) ∨ (a ∧ c)
+
+First
+
+ - (a ∧ b) ∨ (a ∧ c) ≤ a ∧ (b ∨ c)
+
+   Need to show that a ∧ c ≤ a ∧ (b ∨ c). Since c ≤ b ∨ c this is
+   trivial. Also need to show a ∧ c ≤ a ∧ (b ∨ c), similar reasoning.
+
+ - a ∧ (b ∨ c) ≤ (a ∧ b) ∨ (a ∧ c)
+   b ∨ c ≤ a ⇒ ((a ∧ b) ∨ (a ∧ c))
+
+   Now we need to show b ≤ a ⇒ ((a ∧ b) ∨ (a ∧ c)) and
+   c ≤ a ⇒ ((a ∧ b) ∨ (a ∧ c))
+
+   Now wts a ∧ b ≤ (a ∧ b) ∨ (a ∧ c) and a ∧ c ≤ (a ∧ b) ∨ (a ∧ c)
+   which are both immediate by definition of ∨.
+
+   General idea here
+
+    - Want to expose that ∨ in a ∧ (b ∨ c). In order to do this
+      transpose that a into an exponential. Once we do this split into
+      two cases, show b ≤ ... ⇒ ... and c ≤ ... ⇒ ... which is
+      justified by the UMP of ∨. Now tranpose that a back, giving a ∧
+      b ≤ ... and a ∧ c ≤ ... which follows immediately.
+
+* TT with Data Types
+
+Start with standard STLC with unit void product sum and
+functions. Start by adding the natural number
+
+       ————————————
+       Γ ⊢ Nat type
+
+         Γ ⊢ n : Nat
+      —————————————————
+       Γ ⊢ suc(n) : Nat
+
+      —————————————————
+       Γ ⊢ zero : Nat
+
+Inductive types like Nat are justified by their mapping out
+property. They state not only that they are closed under certain
+operations but that they contain nothing else. In particular, lazy
+languages don't have inductive types like Nat.
+
+Now what's Nat mapping?
+
+     Γ ⊢ M : C   Γ, x : Nat ⊢ N : C
+    ————————————————————————————————
+    Γ, x : Nat ⊢ iter(M; x.N)(x) : C
+
+Equations:
+
+   iter(M; x.N)(zero)  ≡ M
+   iter(M; x.N)(suc P) ≡ [iter(P; M; x.N)/x]N
+
+
+p2 = λn : Nat. iter(suc(suc(zero)); x.suc(x))(n)
+
+Why can claim:
+∀ m ∈ Nat. p2(m) = suc(suc(m)) = m + 2
+
+And this is about all we can claim for this function. There's no way
+to describe it's behaviour besides it's extensional properties. We can
+only characterize its input and output.
+
+We now want to describe the uniqueness of iter. How do we do this?
+With finite types, we could easily do this by just listing of the n
+cases since n was finite. With + for example there are just to
+rules. However, now we have problems since there are infinitely many
+natural numbers.
+
+GARBAGE RULE BUT WHAT WE WANT
+
+    for all m ∈ N. ([n/z]R ≡ iter(M; x.N)(n))
+    ————————————————————————————————————————
+      Γ, z : Nat ⊢ R ≡ iter(M; x.N)(z) : C
+
+Nonsense since this implies infinite conjunction
+
+Issues are arising because we need a theory of equality which is
+indeed proof relevant.
+
+** Analytic vs Synthetic judgments
+
+An analytic judgment is one which is self evident and requires
+evidence. For example Γ ⊢ M ≡ N : A. There's no room for evidence
+here.
+
+If we have the rule above we need *evidence* we can't just say M ≡ N,
+we need to say M ≡ N BECAUSE OF SOME PROOF π. Ack.
+
+* Type Indexed Families
+
+Sets can be indexed by other sets, eg Xᵢ | i ∈ I. Now what is a family
+of sets? An ugly mess. You can kind of think of this as "X : I → Set"
+(nonsense since Set isn't a SET).
+
+EXERCISE: What the hell is a fibration?
+
+Same issues come up in TT. First, motivation.
+
+ - Props-as-types. In that we say the elements of a type are proofs of
+   it's prop. But what's a predicate? It's a family of types. It maps
+   evidence to a different set of proofs.
+
+However, FOL distinguishes "data" from "proofs". "propositions" aren't
+"types". We have data (like nats, chars, whatever) and we make
+statements about it with propositions. And the two don't really
+mix. This is how TM work as well.
+
+If a predicate is a function from types to props, then a "typical"
+function maps types into the class of all types.
+
+This blends our type formation and typing judgment. We now say things
+like
+
+    x : A ⊢ B type
