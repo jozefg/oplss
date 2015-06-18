@@ -1,0 +1,22 @@
+#+TITLE: Category Theory
+
+* Initial/Terminal Objects
+
+A terminal object is an object 1 so that for any object X there is a
+unique map ! : X → 1.
+
+Corollary: 1 has only one endomorphism, the identity.
+
+Lemma, 1 is unique up to iso.
+
+Assume X is another terminal object, then ! : X → 1 and x : 1 → X are
+uniquely defined. However ! · x = id and x · 1 = id by
+corollary. Therefore, x and ! are two sided inverses and 1 ≅ X as
+required.
+
+Dual of a terminal object is an initial one. An initial object is the
+terminal object in the opposite category. Denote the uniquely defined
+map in the normal category as ¡
+
+Note, i · ! = ! for all i since the set C(X, 1) has only one member !
+and i · !, ! ∈ C(X, 1).

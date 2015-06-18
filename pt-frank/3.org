@@ -1,0 +1,158 @@
+#+TITLE: Proof Theory: Sequent Calculus/Verification
+
+* First, The Homework
+Remember that we were talking about temporal logic
+
+      M : A @ t + 1
+    —————————————————
+    next M : ◯ A @ t
+
+       M : ◯ A @ t
+    ——————————————————
+    prev M : A @ t + 1
+
+   prev(next(A)) becomes A
+   A : ◯ A       becomes next(prev(A))
+
+So the connective is locally sound and complete.
+
+Restrict the or elimination rule to require the output to be at the
+same time as the discrimee. This seems to work.
+
+We can use this to express staging just like we can with modal
+logic. That's kinda fun.
+
+EXERCISE: Rewrite the staged evaluation function for power.
+* Sequent Calulus
+All praise Gentzen
+
+ML '83 (and Dummet?): The meaning of a proposition is determined by
+what counts as a verification of it.
+
+In ML is a "verification" is a canonical term?
+
+The fact that it's verification and not proof is
+important. Understanding a prop requires understanding the space of
+all connectives since a proof may bring in all of them! A verification
+is a proof that avoids all of these detours. We distinguish it with ↑
+instead of just true. For example,
+
+       A ↑   B ↑
+       —————————
+        A ∧ B ↑
+
+
+Importantly, it isn't the case that
+
+     A ⊃ B ↑  A ↑
+     ————————————
+         B ↑
+
+Since then a verification of B depends on something other than its
+subformula.
+
+For ∨, the verifications are
+
+         A ↑       B ↑
+       ———————   ———————
+       A ∨ B ↑   A ∨ B ↑
+
+
+Implication gets tricky. Our hypotheses isn't a verification, it
+should be something we intend to eliminate. Call this a use. A
+judgment that A has a use is A ↓
+
+        ↓ A
+        ————
+        ....
+        ————
+        B ↑
+      ———————
+      A ⊃ B ↑
+
+
+Furthermore
+
+      A ∧ B ↓  A ∧ B ↓
+      ———————  ———————
+        A ↓      B ↓
+
+                A ↓   B ↓
+                ...   ...
+      A ∨ B ↓   C ↑   C ↑
+      ———————————————————
+             C ↑
+
+      ⊥ ↓
+      ———
+      C ↑
+
+      A ⊃ B ↓    A ↑
+      ——————————————
+           B ↓
+
+         A ↓
+         ———
+         A ↑
+
+Theorem: If we have a proof of A ↑, then only subformulas A appear in
+the proposition
+
+Proof, by induction on the rules.
+
+Therefore, a meaning of a prop is its verifications.
+
+
+Theorem: if A true then A ↑.
+Proof, strong normalization?
+
+Now let's change things up, verifications/uses force us to work down
+with elims and up with verifications, but let's make it so that all
+rules work up to conclusions. Enter sequent calculus. The basic
+judgment is Γ ⇒ A where Γ is a set of propositions
+
+
+Γ = antecedents and A = succedent in Γ ⇒ A
+
+   —————————
+   Γ, A ⇒ A
+
+   —————————
+    Γ ⇒ ⊤
+
+     Γ ⇒ A     Γ ⇒ B
+   —————————  —————————
+   Γ ⇒ A ∨ B  Γ ⇒ A ∨ B
+
+   Γ, A ⇒ B
+  ——————————
+  Γ ⇒ A ⊃ B
+
+   Γ, A ⇒ C      Γ, B ⇒ C
+  ————————————  ————————————
+  Γ, A ∧ B ⇒ C  Γ, A ∧ B ⇒ C
+
+  Γ ⇒ A   Γ, B ⇒ C
+  —————————————————
+    Γ, A ⊃ B ⇒ C
+
+  Γ, A ⇒ C   Γ, B ⇒ C
+  ————————————————————
+     Γ, A ∨ B ⇒ C
+
+  —————————
+  Γ, ⊥ ⇒ C
+
+EXERCISE: Prove some sequent calculus formula
+EXERCISE: What are the proof terms of sequent calculus? Verification
+          and uses?
+
+EXERCISE: What would the corresponding sequent be if the output of the
+          elim rule for A ∨ B ↓ be?
+Beta normal eta-long lambda calculus.
+
+Is canonical?
+
+case x of
+  inl l => C
+  inr r => C'

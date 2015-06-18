@@ -1,0 +1,116 @@
+#+TITLE: Type Theory
+
+* Homework
+
+In a bool alg, x ⇒ y = ¬x ∨ y. In order to show this is an exponential
+you need distributivity.
+
+* Reminders
+
+Puzzled by what should be equality Γ ⊢ M ≡ N : A. It'd be nice if it
+was immediate so that given Γ M and N it can be decided whether it
+holds or not.
+
+This becomes an issue especialy with Nat. In particular rec for Nat
+tends to make the equality go to hell, it requires ∞ many cases.
+
+Fact, for every M and N that are natural numbers, plus(m, n) = m +
+n. Needs a proof though. This is a metatheorem since it appeals to
+real quantification and stuff.
+
+You can also prove: x : Nat ⊢ plus x zero ≡ x
+                    x : Nat, y : Nat ⊢ plus x (suc y) ≡ suc (plus x y)
+[These require only beta rules]
+
+You can't prove x : Nat ⊢ plus zero x ≡ x without the unicity of rec,
+which requires a proof by mathematical induction.
+
+* Back to Families
+Families of types ≈ predicates aka propositional functions
+                  ≈ n : Nat ⊢ Seq n type (eg type indexed sequences)
+
+In simple type theory we had A type, Γ context, Γ ⊢ M : A these are
+our judgment. In this we can have a substitution γ : Γ' → Γ where if
+Γ' ⊢ M : A then Γ ⊢ γ(M) : A. We can use this with Γ = ∅ to close open
+terms.
+
+In dependent type theory (YEAHHH) we have a few judgments
+
+ - Γ ctx
+ - Γ ≡ Γ'
+ - Γ ⊢ A type ← This is our notion of family
+ - Γ ⊢ A ≡ A' type
+ - Γ ⊢ M : A ← This is membership
+ - Γ ⊢ M ≡ M' : A
+
+Demand a principle of functionality on these judgments
+
+if
+
+    x : A ⊢ B(x) type
+    ⊢ c ≡ c' : A
+
+then
+
+    ⊢ [c/x]B ≡ [c'/x]B type
+
+This causes pain. Similar requirements for membership judgment
+
+    x : A ⊢ b(x) : B(x) type
+    ⊢ c ≡ c' : A
+
+then
+
+    ⊢ [c/x]b ≡ [c'/x]b : [c/x]B
+
+However why should this be at [c/x]B instead of [c'/x]B? Functionality
+says that if [x : A ⊢ B type] then ⊢ [c/x]B ≡ [c'/x]B type. To handle
+this we have membership respects ≡
+
+   Γ ⊢ A ≡ B type    Γ ⊢ a : A
+   ———————————————————————————
+           Γ ⊢ a : B
+
+If Γ ⊢ A ≡ B type isn't analytic, we're completely fucked for type
+checking. Decidably of type checking hinges on decidable
+equivalence. ≡ represents definitional/calculational equivalence. What
+the hell ≡ should be is really not solved, at all.
+
+Anyways, which families exist?
+
+ - Seq
+ - Π
+ - Σ
+ - if(..., ...)(x)
+
+In particular every elim form must be duplicated as a type
+family. These are called large elims.
+
+ Why not make types terms. Just add a universe which classifies what
+terms are types. And a higher universe to classify that one, and so on
+and so on.
+
+   Γ ⊢ A type      becomes Γ ⊢ A : U
+   Γ ⊢ A ≡ A' type becomes Γ ⊢ A ≡ A' : U
+
+The universe U : U₁ : U₂ ... and they are cumulative
+
+       Γ ⊢ M : Uᵢ
+    ————————————————
+    Γ ⊢ M : U(i + 1)
+
+
+(inconsistent to have Uᵢ : Uᵢ) Finally,
+
+    Γ ⊢ Nat, 0, 1, A × B, A → B, A + B : U₀ etc etc
+    Γ, x : Nat ⊢ Seq(x) : U₀
+
+Also,
+
+            Γ ⊢ A : Uᵢ    Γ, a : A ⊢ B : Uᵢ
+    ———————————————————————————————————————————
+     Γ ⊢ Σ a : A. B : Uᵢ     Γ ⊢ Π a : A. B : Uᵢ
+
+Note that this is predicative.
+
+[Proofs and Refutations book]
