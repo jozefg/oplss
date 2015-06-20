@@ -1,0 +1,36 @@
+#+TITLE: Type Theory 5
+
+* Recap
+
+We were looking at the Id type. J is still confusing, it's just
+induction.
+
+
+     Γ ⊢ a : M = N    Γ, a : A ⊢ B : P(a, a, refl)
+     —————————————————————————————————————————————
+              Γ ⊢ J(B)(a)  : P(M, N, a)
+
+
+Special case: transport
+
+    transport : M ≡ N → P M → P N
+    transport = J(λx. x)
+
+Transport is an isomorphism up to a higher isomorphism! It's a way of
+saying that we can translate from one fiber to another fiber that when
+acting on reflexivity acts as the identity function.
+
+Derived notion:
+
+suppose P =ₐ Q where P : B(M) and Q(N) if a : M = N. P =ₐ Q means that
+tr(a)(M) = N
+
+This is a nice notion of heterogeneous equality.
+
+Identification is an equivalence: namely
+
+refl(M) : M = M
+a⁻ : N = M [a : M = N]
+trans(a, b) : N = P [a : N = M, b : M = P]
+
+EXERCISE: complete these

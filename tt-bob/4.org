@@ -1,0 +1,68 @@
+#+TITLE: Type Theory
+
+* Proof Relevant Equality
+
+ - A possible use of the family of types
+
+Hey, the homework is relevant here.. Cool stuff.
+
+Given an arbitrary function f : N → N, can we inhabit
+
+   cong : (m n : N) → EQ M N → EQ (f m) (f n)
+
+Answer, yes. See Agda code.
+
+Now we start defining EQ for types beyond nats
+
+   EQ(1) = λx. λy. 1
+   EQ(0) = λx. λy. 1
+   EQ(A×B) = λx. λy. EQ (fst x) (fst y) × EQ (snd x) (snd y)
+   EQ(A ⊃ B) = λx. λy. λ a. λ a'. EQ a a' → EQ (x a) (y a')
+
+We cannot prove extensional equality. We cannot fill in
+
+       refl(F) : EQ((Nat → Nat) → Nat) F F
+
+Agh, the function type isn't extensional. It's not the case that
+functions are the same if the behave the same. We cannot prove
+reflexivity in a sane way.
+
+Idea, define
+
+   ELT(A) : A → U ≙ λ x. EQ(A) x x
+
+Now
+
+   Π (x : A) → ELT(x) → EQ(A) x x
+
+holds at least. What's a good example of an M : A which isn't in
+ELT(A)? It's tricky to exhibit one but essentially Church's law gives
+us a function from Nat → Nat to Nat.
+
+Now we're ready to really discuss equality. What is equality? Equality
+is what everything respects. Contextual equality is true equality?
+
+ID type
+
+     Γ ⊢ A : U  Γ ⊢ M : A   Γ ⊢ N : A
+    ——————————————————————————————————
+         Γ ⊢ Id(A)(M, N) : U
+
+Notation M = N. This is a TYPE. WITH INHABITANTS.
+
+          Γ ⊢ M : A
+    —————————————–—————
+    Γ ⊢ refl(M) : M = M
+
+Recursion principle: J
+
+         Γ ⊢ A : U    Γ, M : A, N : A, E : M = N ⊢ P : U
+             Γ x : A ⊢ B : [x, x, refl(x)/M, N, E]P
+     ——————————————————————————————————————————————————————
+         Γ, M : A, N : A, E : M = N ⊢ J(x.B, B)(E) : P
+
+
+Special case: transport
+
+     transport : (P : A → U) → (a b : A) → a = b → P a → P b
+     transport P a b eq pa = J(x.pa)
